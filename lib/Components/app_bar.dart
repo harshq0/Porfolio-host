@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:harish_portfolio/Components/app_bar_title.dart';
 import 'package:harish_portfolio/constant.dart';
 
 class AppBarContainer extends StatefulWidget {
-  const AppBarContainer({super.key});
+  final void Function(String)? ontap;
+  final String title;
+  const AppBarContainer({
+    super.key,
+    required this.ontap,
+    required this.title,
+  });
 
   @override
   State<AppBarContainer> createState() => _AppBarContainerState();
 }
 
 class _AppBarContainerState extends State<AppBarContainer> {
-  String isSelected = '';
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,48 +24,135 @@ class _AppBarContainerState extends State<AppBarContainer> {
         width: globalWidth,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: Colors.black,
+          color: Colors.transparent,
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppBarTitle(
-                text: 'Home',
-                isSelected: isSelected == 'Home',
-                onTap: () => setState(() => isSelected = 'Home'),
-              ),
-              AppBarTitle(
-                text: 'Project',
-                isSelected: isSelected == 'Project',
-                onTap: () => setState(() => isSelected = 'Project'),
-              ),
-              Row(
-                children: [
-                  Image.asset('assets/png/flutter.png', height: 50),
-                  const Text(
-                    'Portfolio',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+              Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white30,
                   ),
-                ],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    spacing: 10,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/png/home.png',
+                        color: Colors.white,
+                        height: 20,
+                      ),
+                      const Text(
+                        'Home',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              AppBarTitle(
-                text: 'Resume',
-                isSelected: isSelected == 'Resume',
-                onTap: () => setState(() => isSelected = 'Resume'),
-              ),
-              AppBarTitle(
-                text: 'About Me',
-                isSelected: isSelected == 'About Me',
-                onTap: () => setState(() => isSelected = 'About Me'),
-              ),
+              // HoverAppBarButton(
+              //   text: 'Home',
+              //   isSelected: widget.title == 'Home',
+              //   onTap: () => widget.ontap?.call('Home'),
+              // ),
+              // HoverAppBarButton(
+              //   text: 'Project',
+              //   isSelected: widget.title == 'Project',
+              //   onTap: () => widget.ontap?.call('Project'),
+              // ),
+              // Row(
+              //   children: [
+              //     Image.asset('assets/png/flutter.png', height: 50),
+              //     const Text(
+              //       'Portfolio',
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 20,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // HoverAppBarButton(
+              //   text: 'Resume',
+              //   isSelected: widget.title == 'Resume',
+              //   onTap: () => widget.ontap?.call('Resume'),
+              // ),
+              // HoverAppBarButton(
+              //   text: 'About Me',
+              //   isSelected: widget.title == 'About Me',
+              //   onTap: () => widget.ontap?.call('About Me'),
+              // ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HoverAppBarButton extends StatefulWidget {
+  final String text;
+  final bool isSelected;
+  final VoidCallback? onTap;
+
+  const HoverAppBarButton({
+    super.key,
+    required this.text,
+    required this.isSelected,
+    this.onTap,
+  });
+
+  @override
+  State<HoverAppBarButton> createState() => _HoverAppBarButtonState();
+}
+
+class _HoverAppBarButtonState extends State<HoverAppBarButton> {
+  bool isHover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHover = true),
+      onExit: (_) => setState(() => isHover = false),
+      child: InkWell(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          height: 50,
+          width: 130,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: (widget.isSelected || isHover)
+                ? Colors.white
+                : Colors.transparent,
+          ),
+          child: Center(
+            child: Text(
+              widget.text,
+              style: TextStyle(
+                color: (widget.isSelected || isHover)
+                    ? Colors.black
+                    : Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ),

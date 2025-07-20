@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:harish_portfolio/Pages/home_screen.dart';
 import 'package:harish_portfolio/Pages/navigation_bar_screen.dart';
 import 'package:harish_portfolio/constant.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -14,18 +16,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     globalHeight = MediaQuery.of(context).size.height;
     globalWidth = MediaQuery.of(context).size.width;
-    return ResponsiveBuilder(
-      builder: (context, _) {
-        return MaterialApp(
-          title: 'My Portfolio',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            useMaterial3: true,
-            fontFamily: 'Preahvihear',
-          ),
-          home: const NavigationBarScreen(),
-        );
-      },
+    return MaterialApp(
+      title: 'My Portfolio',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'Preahvihear',
+        brightness: Brightness.dark,
+      ),
+      home: const HomeScreen(),
     );
   }
 }
