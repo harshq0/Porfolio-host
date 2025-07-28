@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:harish_portfolio/Pages/home_screen.dart';
-import 'package:harish_portfolio/Pages/navigation_bar_screen.dart';
 import 'package:harish_portfolio/constant.dart';
 
 void main() async {
