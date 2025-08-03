@@ -27,7 +27,7 @@ class _AppBarContainerState extends State<AppBarContainer> {
           color: Colors.transparent,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -37,7 +37,7 @@ class _AppBarContainerState extends State<AppBarContainer> {
                   border: Border.all(
                     color: Colors.white30,
                   ),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
                   padding:

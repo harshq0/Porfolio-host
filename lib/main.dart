@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:harish_portfolio/Pages/home_screen.dart';
+import 'package:harish_portfolio/Pages/desktop_screen.dart';
+import 'package:harish_portfolio/Pages/mobile_screen.dart';
+import 'package:harish_portfolio/Pages/responsive_layout.dart';
+import 'package:harish_portfolio/Pages/tablet_screen.dart';
 import 'package:harish_portfolio/constant.dart';
 
 void main() async {
@@ -20,10 +23,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        fontFamily: 'Preahvihear',
         brightness: Brightness.dark,
       ),
-      home: const HomeScreen(),
+      home: const ResponsiveLayout(
+        mobile: MobileScreen(),
+        desktop: DesktopScreen(),
+        tablet: TabletScreen(),
+      ),
     );
   }
 }
