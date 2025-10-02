@@ -83,41 +83,85 @@ flutter:
       fonts:
         - asset: assets/font/Preahvihear-Regular.ttf
 
-    - family: inter-black
+    - family: incon-black
       fonts:
-        - asset: assets/font/inter-black.ttf
+        - asset: assets/font/Inconsolata-Black.ttf
 
-    - family: inter-bold
+    - family: incon-bold
       fonts:
-        - asset: assets/font/inter-bold.ttf
+        - asset: assets/font/Inconsolata-Bold.ttf
 
-    - family: inter-extraBold
+    - family: incon-extraBold
       fonts:
-        - asset: assets/font/inter-extraBold.ttf
+        - asset: assets/font/Inconsolata-ExtraBold.ttf
 
-    - family: inter-extraLight
+    - family: incon-extraLight
       fonts:
-        - asset: assets/font/inter-extraLight.ttf
+        - asset: assets/font/Inconsolata-ExtraLight.ttf
 
-    - family: inter-italic
+    - family: incon-medium
       fonts:
-        - asset: assets/font/inter-italic.ttf
+        - asset: assets/font/Inconsolata-Medium.ttf
 
-    - family: inter-medium
+    - family: incon-regular
       fonts:
-        - asset: assets/font/inter-medium.ttf
+        - asset: assets/font/Inconsolata-Regular.ttf
 
-    - family: inter-regular
+    - family: incon-semiBold
       fonts:
-        - asset: assets/font/inter-regular.ttf
+        - asset: assets/font/Inconsolata-SemiBold.ttf
 
-    - family: inter-semiBold
+    - family: incon-Bold
       fonts:
-        - asset: assets/font/inter-semiBold.ttf
+        - asset: assets/font/PlusJakartaSans-Bold.ttf
 
-    - family: inter-thin
+    - family: plus-semiBold
       fonts:
-        - asset: assets/font/inter-thin.ttf
+        - asset: assets/font/PlusJakartaSans-SemiBold.ttf
+
+    - family: plus-extraBold
+      fonts:
+        - asset: assets/font/PlusJakartaSans-ExtraBold.ttf
+
+    - family: plus-italic
+      fonts:
+        - asset: assets/font/PlusJakartaSans-Italic.ttf
+
+    - family: plus-medium
+      fonts:
+        - asset: assets/font/PlusJakartaSans-Medium.ttf
+
+    - family: plus-regular
+      fonts:
+        - asset: assets/font/PlusJakartaSans-Regular.ttf
+
+    - family: plus-bold
+      fonts:
+        - asset: assets/font/PlusJakartaSans-Bold.ttf
+
+    - family: poppins-bold
+      fonts:
+        - asset: assets/font/Poppins-Bold.ttf
+
+    - family: poppins-extraBold
+      fonts:
+        - asset: assets/font/Poppins-ExtraBold.ttf
+
+    - family: poppins-italic
+      fonts:
+        - asset: assets/font/Poppins-Italic.ttf
+
+    - family: poppins-medium
+      fonts:
+        - asset: assets/font/Poppins-Medium.ttf
+
+    - family: poppins-regular
+      fonts:
+        - asset: assets/font/Poppins-Regular.ttf
+
+    - family: poppins-semiBold
+      fonts:
+        - asset: assets/font/Poppins-SemiBold.ttf
 
   #   - family: Trajan Pro
   #     fonts:

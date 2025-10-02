@@ -1,0 +1,2 @@
+C:/Users/sudha/OneDrive/Desktop/Portfolio/Porfolio/android/app/.cxx/Debug/k725e3ga/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/sudha/OneDrive/Desktop/Portfolio/Porfolio/android/app/.cxx/Debug/k725e3ga/x86_64/CMakeFiles/rebuild_cache.dir

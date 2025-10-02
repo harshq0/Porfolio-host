@@ -1,4 +1,5 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:harish_portfolio/constant.dart';
@@ -12,41 +13,12 @@ class TabletScreen extends StatefulWidget {
 }
 
 class _TabletScreenState extends State<TabletScreen> {
-  bool isHover = false;
-  bool isFocusHover = false;
-  Offset mousePosition = Offset.zero;
-  //Timer? _timer;
-  String isSelected = 'Home';
   final ScrollController _scrollController = ScrollController();
-  double topTextOpacity = 1.0;
-
-  // Color _containerColor = Colors.blue;
-
-  // void _changeColor() {
-  //   setState(() {
-  //     _containerColor = _getRandomColor();
-  //   });
-  // }
-
-  // Color _getRandomColor() {
-  //   return Color.fromARGB(
-  //     255,
-  //     Random().nextInt(256), // R
-  //     Random().nextInt(256), // G
-  //     Random().nextInt(256), // B
-  //   );
-  // }
-
-  // @override
-  // void initState() {
-  //   _timer = Timer.periodic(
-  //     const Duration(microseconds: 5000),
-  //     (timer) {
-  //       mousePosition;
-  //     },
-  //   );
-  //   super.initState();
-  // }
+  final GlobalKey aboutKey = GlobalKey();
+  final GlobalKey homeKey = GlobalKey();
+  final GlobalKey experienceKey = GlobalKey();
+  final GlobalKey technlogiesKey = GlobalKey();
+  final GlobalKey projectKey = GlobalKey();
   void _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -55,530 +27,895 @@ class _TabletScreenState extends State<TabletScreen> {
     }
   }
 
-  @override
-  void initState() {
-    _scrollController.addListener(() {
-      double offset = _scrollController.offset;
-      double newOpacity = 1.0 - (offset / 200);
-      newOpacity = newOpacity.clamp(0.0, 1.0);
-
-      setState(() {
-        topTextOpacity = newOpacity;
-      });
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+  void scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     globalHeight = MediaQuery.of(context).size.height;
     globalWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: MouseRegion(
-        onEnter: (event) => setState(() => isFocusHover = true),
-        onExit: (event) => setState(() => isFocusHover = false),
-        onHover: (event) {
-          final RenderBox box = context.findRenderObject() as RenderBox;
-          final localPosition = box.globalToLocal(event.position);
-
-          setState(() {
-            mousePosition = Offset(
-              localPosition.dx / box.size.width,
-              localPosition.dy / box.size.height,
-            );
-          });
-        },
-        child: Container(
-          decoration: isFocusHover
-              ? BoxDecoration(
-                  gradient: RadialGradient(
-                    center: Alignment(
-                      (mousePosition.dx - 0.5) * 2,
-                      (mousePosition.dy - 0.5) * 2,
+      backgroundColor: const Color(0xff11071F),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 60,
+            pinned: true,
+            backgroundColor: const Color(0xff1A0B2E),
+            centerTitle: true,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 70,
+              children: [
+                InkWell(
+                  onTap: () {
+                    scrollToSection(homeKey);
+                  },
+                  child: const AutoSizeText(
+                    'Home',
+                    style: TextStyle(
+                      fontFamily: 'Preahvihear',
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
                     ),
-                    colors: const [
-                      Colors.deepPurple,
-                      Colors.transparent,
-                      Colors.transparent,
-                    ],
-                    radius: 1.5,
                   ),
-                )
-              : null,
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 50.0, vertical: 50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 40),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 200,
-                        width: 200,
+                ),
+                InkWell(
+                  onTap: () {
+                    scrollToSection(experienceKey);
+                  },
+                  child: const AutoSizeText(
+                    'Work Experience',
+                    style: TextStyle(
+                      fontFamily: 'Preahvihear',
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    scrollToSection(technlogiesKey);
+                  },
+                  child: const AutoSizeText(
+                    'Skills',
+                    style: TextStyle(
+                      fontFamily: 'Preahvihear',
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    scrollToSection(projectKey);
+                  },
+                  child: const AutoSizeText(
+                    'Projects',
+                    style: TextStyle(
+                      fontFamily: 'Preahvihear',
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    scrollToSection(aboutKey);
+                  },
+                  child: const AutoSizeText(
+                    'About',
+                    style: TextStyle(
+                      fontFamily: 'Preahvihear',
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SliverFillRemaining(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50.0, vertical: 60),
+                child: Column(
+                  key: homeKey,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 300,
+                        width: 300,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white12),
-                          borderRadius: BorderRadius.circular(400),
-                          boxShadow: const [
-                            BoxShadow(
-                              //color: Colors.white,
-                              blurRadius: 40,
-                              blurStyle: BlurStyle.outer,
-                              offset: Offset(0, 0),
-                            )
-                          ],
+                          gradient: const RadialGradient(
+                            // focalRadius: 20,
+                            // transform: GradientRotation(20),
+                            colors: [
+                              Colors.white,
+                              Color(0xff38215B),
+                              Color(0xff230F44),
+                              Color(0xff11071F),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(100),
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(400),
                           child: Image.asset(
                             'assets/png/flutter.png',
                             fit: BoxFit.contain,
-                            height: 150,
-                            width: 150,
+                            height: 100,
+                            width: 100,
                           ),
                         ),
                       ),
-                      const AutoSizeText(
-                        "I'm Harish.P",
-                        style: TextStyle(
-                          fontFamily: 'inter-bold',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 45,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      AnimatedTextKit(
-                        repeatForever: true,
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            "Flutter Developer",
-                            speed: const Duration(milliseconds: 200),
-                            textStyle: const TextStyle(
-                                fontFamily: 'inter-medium',
-                                fontSize: 30,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey),
+                    ),
+                    const SizedBox(height: 30),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          "Hello! I Am ",
+                          style: TextStyle(
+                            fontFamily: 'Preahvihear',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 30,
+                            color: Colors.white,
                           ),
-                        ],
+                        ),
+                        AutoSizeText(
+                          "Harish.P",
+                          style: TextStyle(
+                            fontFamily: 'Preahvihear',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22,
+                            color: Color(0xff7127BA),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+                    const AutoSizeText(
+                      'A Developer who',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.white,
                       ),
-                      const SizedBox(height: 60),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 10,
+                    ),
+                    const SizedBox(height: 15),
+                    const AutoSizeText.rich(
+                      TextSpan(
                         children: [
-                          HoverAppBarButton(
-                              onTap: () =>
-                                  _launchURL('https://github.com/harshq0'),
-                              text: '',
-                              imagePath: 'assets/png/github.png'),
-                          HoverAppBarButton(
-                              onTap: () => _launchURL(
-                                  'https://www.linkedin.com/in/harish-panneer/'),
-                              text: '',
-                              imagePath: 'assets/png/linkedin.png'),
-                          const HoverAppBarButton(
-                              text: '', imagePath: 'assets/png/resume.png'),
+                          TextSpan(
+                            text: 'Build a user-friendly application,\n',
+                            style: TextStyle(
+                              fontFamily: 'Preahvihear',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'Responsive with ',
+                            style: TextStyle(
+                              fontFamily: 'Preahvihear',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'Flutter magic',
+                            style: TextStyle(
+                              fontFamily: 'Preahvihear',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
+                              color: Color(0xff7127BA),
+                            ),
+                          ),
+                          TextSpan(
+                            text: '...',
+                            style: TextStyle(
+                              fontFamily: 'Preahvihear',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
+                              color: Colors.white,
+                            ),
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  const AutoSizeText(
-                    "Passionate Flutter developer with a strong foundation in Flutter and Dart. Skilled in building clean architecture and eager to learn and explore new technologies quickly, contributing to both personal growth and the success of the company.",
-                    style: TextStyle(
-                      wordSpacing: 3,
-                      fontFamily: 'inter-medium',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.white,
                     ),
-                    textAlign: TextAlign.justify,
-                  ),
-                  const SizedBox(height: 70),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        'Work Experience',
-                        style: TextStyle(
-                          fontFamily: 'inter-extraBold',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AutoSizeText(
-                        'Lentera Technologies Pvt. Ltd.',
-                        style: TextStyle(
-                          fontFamily: 'inter-semiBold',
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      AutoSizeText(
-                        'Sep 2024 - Present',
-                        style: TextStyle(
-                          fontFamily: 'inter-regular',
-                          fontSize: 15,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  const AutoSizeText(
-                    'Flutter Developer',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontFamily: 'inter-medium',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  descriptionPoints(
-                      text:
-                          'Developed and maintained cross-platform mobile applications using Flutter and Dart'),
-
-                  descriptionPoints(
-                      text:
-                          'Implemented REST API integrations to support real-time data flow and enhance appresponsiveness.'),
-
-                  descriptionPoints(
-                      text:
-                          'Integrated FCM (Firebase Cloud Messaging) for push notifications and real-time alerts.'),
-
-                  descriptionPoints(
-                      text:
-                          'Collaborated with cross-functional teams including backend developers, UI/UX designers.'),
-
-                  descriptionPoints(
-                      text:
-                          'Focused on performance optimization, error handling, and smooth UI transitions.'),
-
-                  const SizedBox(height: 30),
-                  const AutoSizeText(
-                    'Projects',
-                    style: TextStyle(
-                      fontFamily: 'inter-extraBold',
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const AutoSizeText(
-                    'Zymra IOT Application',
-                    style: TextStyle(
-                      fontFamily: 'inter-semiBold',
-                      color: Colors.deepPurple,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  descriptionPoints(
-                      text:
-                          'In a real-time project as a Flutter developer, I faced several challenges while working on a live application. These included debugging complex issues, integrating APIs for the first time, and handling unexpected runtime errors. However, I was eager to learn, and through consistent effort, I successfully overcame these challenges. This experience helped me grow technically and taught me how to work effectively in a real-world development environment.'),
-                  descriptionPoints(
-                      text:
-                          'In this project, my role was to develop both the installer and customer applications using Flutter. I collaborated closely with the UI/UX design team and the backend development team to ensure smooth integration and user experience. Throughout the project, I gained hands-on experience in file management, creating custom widgets, implementing Provider state management, integrating FCM (Firebase Cloud Messaging) for push notifications, and setting up Razorpay for payment processing.'),
-
-                  const SizedBox(height: 30),
-                  const AutoSizeText(
-                    'HDP (Henkel Digital Presenter)',
-                    style: TextStyle(
-                      fontFamily: 'inter-semiBold',
-                      color: Colors.deepPurple,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  descriptionPoints(
-                      text:
-                          "A mobile application designed for Henkel Beauty Care’s GCC region to help sales representatives and merchandisers access key product details such as brand KV, positioning, features, benefits, barcodes, country of origin, and must-stock lists for effective in-store management."),
-                  descriptionPoints(
-                      text:
-                          'Through this application, I gained experience in building responsive designs and implementing smooth animations and transitions. I worked on CRUD operations in collaboration with the backend team and learned how to apply the MVVM architecture using the Provider state management approach.'),
-                  const SizedBox(height: 30),
-
-                  // const AutoSizeText(
-                  //   'Ticketzee',
-                  //   style: TextStyle(
-                  //     fontFamily: 'inter-semiBold',
-                  //     color: Colors.deepPurple,
-                  //     fontSize: 22,fF
-                  //     fontWeight: FontWeight.w600,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 5),
-
-                  const AutoSizeText(
-                    'Studies',
-                    style: TextStyle(
-                      fontFamily: 'inter-extraBold',
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const AutoSizeText(
-                    'SRM Valliammai Engineering College',
-                    style: TextStyle(
-                      fontFamily: 'inter-semiBold',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const AutoSizeText(
-                    'BE in Computer Engineering',
-                    style: TextStyle(
-                      fontFamily: 'inter-regular',
-                      fontSize: 16,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  const AutoSizeText(
-                    'Technical Skills',
-                    style: TextStyle(
-                      fontFamily: 'inter-extraBold',
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  _technicalSkill(
-                      imagePath: 'assets/png/flutter-logo.png',
-                      text: 'Flutter'),
-                  const SizedBox(height: 5),
-                  const Text(
-                    'Cross Platform Mobile Apps, Provider, MVVM Architecture, Animation, REST API, SQFLite, Custom Widget Building.',
-                    style: TextStyle(
-                      fontFamily: 'inter-regular',
-                      fontSize: 17,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  _technicalSkill(
-                      imagePath: 'assets/png/dart-logo.png', text: 'Dart'),
-                  const SizedBox(height: 5),
-                  const Text(
-                    'Solid understanding of programming languages in Dart, Object-Oriented Programming (OOP), Null Safety, Asynchronous Programming.',
-                    style: TextStyle(
-                      fontFamily: 'inter-regular',
-                      fontSize: 17,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  _technicalSkill(
-                      imagePath: 'assets/png/firebase-logo.png',
-                      text: 'Firebase'),
-                  const SizedBox(height: 5),
-                  const Text(
-                    'Authentication, Cloud Firestore, Realtime Database, Cloud Messaging (FCM).',
-                    style: TextStyle(
-                      fontFamily: 'inter-regular',
-                      fontSize: 17,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  const AutoSizeText(
-                    'Contact Me',
-                    style: TextStyle(
-                      fontFamily: 'inter-extraBold',
-                      fontSize: 35,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Image.asset(
-                        'assets/png/phone.png',
+                    const SizedBox(height: 10),
+                    const AutoSizeText(
+                      'One codebase, every platform, delivering smooth apps everywhere you go!',
+                      style: TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 10,
                         color: Colors.white,
-                        height: 20,
                       ),
-                      const AutoSizeText(
-                        '9361045110',
-                        style: TextStyle(
-                          fontFamily: 'inter-bold',
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Image.asset(
-                        'assets/png/mail.png',
+                    ),
+                    const SizedBox(height: 40),
+                    const AutoSizeText(
+                      "I am a self-taught Flutter developer  with 1+ years in the industry. My focus is on crafting meaningful and delightful digital products that establish an equilibrium between user needs and business objectives. I specialize in building user-friendly, responsive, and high-performance applications.",
+                      style: TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
                         color: Colors.white,
-                        height: 20,
                       ),
-                      const AutoSizeText(
-                        'harishselvampanneer@gmail.com',
-                        style: TextStyle(
-                          fontFamily: 'inter-bold',
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                    ),
+                    SizedBox(
+                      height: 70,
+                      key: experienceKey,
+                    ),
+                    const AutoSizeText(
+                      'Work Experience',
+                      style: TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Column(
+                      spacing: 20,
+                      children: [
+                        Container(
+                          width: globalWidth,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff130428),
+                                Color(0xff251043),
+                              ],
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 20.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/png/company-image.png',
+                                  height: 40,
+                                ),
+                                const SizedBox(width: 15),
+
+                                // Left text
+                                const Expanded(
+                                  flex: 6,
+                                  child: AutoSizeText(
+                                    'I am working at Lentera Technologies Private Limited',
+                                    style: TextStyle(
+                                      fontFamily: 'poppins-medium',
+                                      fontSize: 16.5,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                ),
+
+                                // Pushes the date to the right
+                                const Spacer(),
+
+                                // Right text
+                                const Flexible(
+                                  flex: 2,
+                                  child: AutoSizeText(
+                                    'Sept 2024 - Present',
+                                    style: TextStyle(
+                                      fontFamily: 'poppins-medium',
+                                      fontSize: 16.5,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        experienceContainer(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff130428),
+                                Color(0xff251043),
+                                // Color(0xff38126D),
+                                // Color(0xff261045),
+                                // Color(0xff190634),
+                              ],
+                            ),
+                            image: 'assets/png/responsive-image.png',
+                            text:
+                                'Developed and maintained  cross-platform mobile  applications using Flutter and Dart.'),
+                        experienceContainer(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff130428),
+                                Color(0xff251043),
+                                Color(0xff38126D),
+                                Color(0xff261045),
+                                Color(0xff190634),
+                              ],
+                            ),
+                            image: 'assets/png/api-image.png',
+                            text:
+                                'Implemented REST API integrations  to support real-time data flow  and enhance appresponsiveness.'),
+                        experienceContainer(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff130428),
+                                Color(0xff251043),
+                                // Color(0xff38126D),
+                                // Color(0xff261045),
+                                // Color(0xff190634),
+                              ],
+                            ),
+                            image: 'assets/png/notification-image.png',
+                            text:
+                                'Integrated FCM  (Firebase Cloud Messaging) for  push notifications  and real-time alerts.'),
+                        experienceContainer(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff261045),
+                                Color(0xff130428),
+
+                                // Color(0xff38126D),
+                                // Color(0xff261045),
+                                // Color(0xff190634),
+                              ],
+                            ),
+                            image: 'assets/png/optimize-image.png',
+                            text:
+                                'Focused on performance optimization, error handling, and smooth UI transitions.'),
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    const AutoSizeText(
+                      'Studies',
+                      style: TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: globalWidth,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xff130428),
+                            Color(0xff251043),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 20.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/png/college-image.png',
+                              height: 60,
+                            ),
+                            const SizedBox(width: 15),
+
+                            // Left text
+                            const Expanded(
+                              flex: 5,
+                              child: AutoSizeText(
+                                'SRM Valliammai Engineering College B.E Computer Science and Engineering',
+                                style: TextStyle(
+                                  fontFamily: 'poppins-medium',
+                                  fontSize: 16.5,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                            ),
+
+                            // Pushes the date to the right
+                            const Spacer(),
+
+                            // Right text
+                            const Flexible(
+                              flex: 2,
+                              child: AutoSizeText(
+                                'July 2019 - May 2023',
+                                style: TextStyle(
+                                  fontFamily: 'poppins-medium',
+                                  fontSize: 16.5,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                      key: technlogiesKey,
+                    ),
+                    const AutoSizeText(
+                      'Technologies',
+                      style: TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    Column(
+                      children: [
+                        RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'I don’t just learn tech,',
+                                style: TextStyle(
+                                  fontFamily: 'Preahvihear',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 22,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' I turn it into experiences!',
+                                style: TextStyle(
+                                  fontFamily: 'Preahvihear',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 22,
+                                  color: Color(0xff7127BA),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        Image.asset('assets/png/technologies.png'),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50,
+                      key: projectKey,
+                    ),
+                    Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const AutoSizeText(
+                              'Projects',
+                              style: TextStyle(
+                                fontFamily: 'poppins-semiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: Color(0xff7127BA),
+                              ),
+                            ),
+                            const AutoSizeText(
+                              'IOT Based Solar Panel Application',
+                              style: TextStyle(
+                                fontFamily: 'poppins-semiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            projectContainer(
+                                technologiesText:
+                                    'Flutter, Dart, REST API, FCM, Rasorpay (Payment Gateway).',
+                                text:
+                                    'I built a responsive design for both Android and iOS applications for customer and installer sides using the Flutter framework. I implemented REST API integrations to support real-time data flow and improve app responsiveness. I integrated Firebase Cloud Messaging (FCM) for push notifications and real-time alerts. I focused on performance optimization, error handling, and ensuring smooth UI transitions. '),
+                          ],
+                        ),
+                        const SizedBox(height: 50),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const AutoSizeText(
+                              'Projects',
+                              style: TextStyle(
+                                fontFamily: 'poppins-semiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: Color(0xff7127BA),
+                              ),
+                            ),
+                            const AutoSizeText(
+                              'Henkal Digital Presenter Application',
+                              style: TextStyle(
+                                fontFamily: 'poppins-semiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            projectContainer(
+                                liveOnTap: () async {
+                                  final Uri url = Uri.parse(
+                                      'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
+                                  if (await canLaunchUrl(url)) {
+                                    await launchUrl(url,
+                                        mode: LaunchMode.externalApplication);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                                liveOnTapIos: () async {
+                                  final Uri url = Uri.parse(
+                                      'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
+                                  if (await canLaunchUrl(url)) {
+                                    await launchUrl(url,
+                                        mode: LaunchMode.externalApplication);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                                liveUrl: 'HDP android mobile app',
+                                liveUrlIos: 'HDP ios mobile app',
+                                width: globalWidth,
+                                projectImage: Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xff2B0B3A),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 30.0, top: 30.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                          'assets/png/zetstron.png',
+                                          height: 300),
+                                    ),
+                                  ),
+                                ),
+                                technologiesText:
+                                    'Flutter, Dart, REST API, Provider(State Management),MVVM, Animations.',
+                                text:
+                                    'HDP is a digital presenter application that allows users to create, manage, and present digital content seamlessly. The app provides an intuitive interface for users to organize their presentations, add multimedia elements, and deliver engaging presentations on various devices. With HDP, users can easily share their presentations with others and collaborate in real-time. The app is designed to enhance the presentation experience, making it more interactive and impactful.'),
+                          ],
+                        ),
+                        const SizedBox(height: 50),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const AutoSizeText(
+                              'Projects',
+                              style: TextStyle(
+                                fontFamily: 'poppins-semiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: Color(0xff7127BA),
+                              ),
+                            ),
+                            const AutoSizeText(
+                              'IOT Based Solar Panel Application',
+                              style: TextStyle(
+                                fontFamily: 'poppins-semiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            projectContainer(
+                              liveOnTap: () async {
+                                final Uri url =
+                                    Uri.parse('https://www.zetstron.com/');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveUrl: 'www.zetstron.com',
+                              width: globalWidth,
+                              projectImage: Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff2B0B3A),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 30.0, top: 30.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                        'assets/png/zetstron.png',
+                                        height: 300),
+                                  ),
+                                ),
+                              ),
+                              technologiesText: 'Flutter, Dart.',
+                              text:
+                                  'I have build a responsive website for desktop, tablet, and mobile using the Flutter framework. With a email sending feature, users can easily reach out for inquiries or support. The website is designed to provide a seamless user experience across all devices, ensuring accessibility and engagement for all visitors.',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 50),
+                      ],
+                    ),
+                    const SizedBox(height: 100),
+                    AutoSizeText(
+                      key: aboutKey,
+                      'Contact',
+                      style: const TextStyle(
+                        fontFamily: 'Preahvihear',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      spacing: 5,
+                      children: [
+                        Image.asset(
+                          'assets/png/mail.png',
+                          color: Colors.white,
+                          height: 20,
+                        ),
+                        const AutoSizeText(
+                          'harishselvampanneer@gmail.com',
+                          style: TextStyle(
+                            fontFamily: 'Preahvihear',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    Row(
+                      spacing: 20,
+                      children: [
+                        socialIcon(
+                          tooltipMessage: 'GitHub',
+                          image: 'assets/png/github.png',
+                          onTap: () => _launchURL('https://github.com/harshq0'),
+                        ),
+                        socialIcon(
+                          tooltipMessage: 'LinkedIn',
+                          image: 'assets/png/linkedin.png',
+                          onTap: () => _launchURL(
+                              'https://www.linkedin.com/in/harish-panneer/'),
+                        ),
+                        socialIcon(
+                          tooltipMessage: 'Resume',
+                          image: 'assets/png/resume.png',
+                          onTap: () => _launchURL('https://github.com/harshq0'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _technicalSkill({required String imagePath, required String text}) {
-    return Row(
-      spacing: 10,
-      children: [
-        imagePath != ''
-            ? Image.asset(
-                imagePath,
-                height: 20,
-              )
-            : const SizedBox(),
-        AutoSizeText(
-          text,
-          style: const TextStyle(
-            fontFamily: 'inter-bold',
-            color: Colors.white,
-            fontSize: 25,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget descriptionPoints({required String text}) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          const TextSpan(
-            text: '.',
-            style: TextStyle(
-              color: Colors.deepPurple,
-              fontFamily: 'inter-bold',
-              fontSize: 40,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const WidgetSpan(child: SizedBox(width: 10)),
-          TextSpan(
-            text: text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'inter-medium',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],
       ),
     );
   }
-}
 
-class HoverAppBarButton extends StatefulWidget {
-  final String text;
-  final String imagePath;
-  final void Function()? onTap;
+  Widget experienceContainer(
+      {required String text,
+      required String image,
+      required Gradient? gradient}) {
+    return Container(
+      width: globalWidth,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        gradient: gradient,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Row(
+          spacing: 15,
+          children: [
+            Image.asset(
+              image,
+              height: 60,
+            ),
+            Expanded(
+              flex: 3,
+              child: AutoSizeText(
+                text,
+                style: const TextStyle(
+                  fontFamily: 'poppins-medium',
+                  fontSize: 16.5,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-  const HoverAppBarButton({
-    super.key,
-    required this.text,
-    required this.imagePath,
-    this.onTap,
-  });
-
-  @override
-  State<HoverAppBarButton> createState() => _HoverAppBarButtonState();
-}
-
-class _HoverAppBarButtonState extends State<HoverAppBarButton> {
-  bool isHover = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: widget.onTap,
-      child: MouseRegion(
-        onEnter: (event) {
-          setState(() => isHover = true);
-        },
-        onExit: (event) {
-          setState(() => isHover = false);
-        },
+  Widget projectContainer({
+    required String text,
+    required String technologiesText,
+    double? width,
+    Widget? projectImage,
+    String? liveUrl,
+    String? liveUrlIos,
+    void Function()? liveOnTap,
+    void Function()? liveOnTapIos,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Container(
+          width: width,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.white12),
-            boxShadow: const [
-              BoxShadow(
-                blurRadius: 40,
-                blurStyle: BlurStyle.outer,
-                offset: Offset(0, 0),
-              )
-            ],
-            color: isHover ? Colors.white10 : Colors.black,
-            borderRadius: BorderRadius.circular(10),
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Image.asset(
-              widget.imagePath,
-              color: Colors.white,
-              height: 20,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 15,
+              children: [
+                AutoSizeText(
+                  text,
+                  style: const TextStyle(
+                    fontFamily: 'poppins-medium',
+                    fontSize: 16.5,
+                    fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.visible,
+                  ),
+                ),
+                Row(
+                  spacing: 15,
+                  children: [
+                    AutoSizeText(
+                      'Technologies Used : $technologiesText',
+                      style: const TextStyle(
+                        fontFamily: 'poppins-medium',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                    Image.asset('assets/png/arrow_point.png', height: 15),
+                  ],
+                ),
+                Column(
+                  spacing: 5,
+                  children: [
+                    liveUrl != null
+                        ? Row(
+                            spacing: 15,
+                            children: [
+                              const AutoSizeText(
+                                'Live :',
+                                style: TextStyle(
+                                  fontFamily: 'poppins-medium',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: liveOnTap,
+                                child: AutoSizeText(liveUrl,
+                                    style: const TextStyle(
+                                      fontFamily: 'poppins-medium',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.visible,
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                    liveUrlIos != null
+                        ? Row(
+                            spacing: 15,
+                            children: [
+                              const AutoSizeText(
+                                'Live :',
+                                style: TextStyle(
+                                  fontFamily: 'poppins-medium',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: liveOnTapIos,
+                                child: AutoSizeText(liveUrlIos,
+                                    style: const TextStyle(
+                                      fontFamily: 'poppins-medium',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.visible,
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
+              ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget socialIcon(
+      {required String image,
+      required void Function()? onTap,
+      required String tooltipMessage}) {
+    return Tooltip(
+      message: tooltipMessage,
+      textStyle: const TextStyle(
+        fontFamily: 'Preahvihear',
+        fontWeight: FontWeight.w600,
+        fontSize: 12,
+        color: Colors.black,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        child: Image.asset(
+          image,
+          height: 25,
+          color: Colors.white,
         ),
       ),
     );
