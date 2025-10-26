@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:harish_portfolio/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -137,6 +136,7 @@ class _MobileScreenState extends State<MobileScreen> {
           const SliverAppBar(
             expandedHeight: 60,
             pinned: true,
+
             backgroundColor: Color(0xff1A0B2E),
             // centerTitle: true,
             // title: Row(
@@ -251,7 +251,7 @@ class _MobileScreenState extends State<MobileScreen> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Build a user-friendly application,\n',
+                            text: 'understands Flutter turns ideas,\n',
                             style: TextStyle(
                               fontFamily: 'Preahvihear',
                               fontWeight: FontWeight.w500,
@@ -259,17 +259,17 @@ class _MobileScreenState extends State<MobileScreen> {
                               color: Colors.white,
                             ),
                           ),
+                          // TextSpan(
+                          //   text: '— Flutter’s magic ',
+                          //   style: TextStyle(
+                          //     fontFamily: 'Preahvihear',
+                          //     fontWeight: FontWeight.w500,
+                          //     fontSize: 25,
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
                           TextSpan(
-                            text: 'Responsive with ',
-                            style: TextStyle(
-                              fontFamily: 'Preahvihear',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 25,
-                              color: Colors.white,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Flutter magic',
+                            text: 'into smooth experiences',
                             style: TextStyle(
                               fontFamily: 'Preahvihear',
                               fontWeight: FontWeight.w500,
@@ -392,6 +392,7 @@ class _MobileScreenState extends State<MobileScreen> {
                               colors: [
                                 Color(0xff130428),
                                 Color(0xff251043),
+                                Color(0xff38126D),
                                 // Color(0xff38126D),
                                 // Color(0xff261045),
                                 // Color(0xff190634),
@@ -408,8 +409,6 @@ class _MobileScreenState extends State<MobileScreen> {
                                 Color(0xff130428),
                                 Color(0xff251043),
                                 Color(0xff38126D),
-                                Color(0xff261045),
-                                Color(0xff190634),
                               ],
                             ),
                             image: 'assets/png/api-image.png',
@@ -422,9 +421,7 @@ class _MobileScreenState extends State<MobileScreen> {
                               colors: [
                                 Color(0xff130428),
                                 Color(0xff251043),
-                                // Color(0xff38126D),
-                                // Color(0xff261045),
-                                // Color(0xff190634),
+                                Color(0xff38126D),
                               ],
                             ),
                             image: 'assets/png/notification-image.png',
@@ -435,12 +432,9 @@ class _MobileScreenState extends State<MobileScreen> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               colors: [
-                                Color(0xff261045),
                                 Color(0xff130428),
-
-                                // Color(0xff38126D),
-                                // Color(0xff261045),
-                                // Color(0xff190634),
+                                Color(0xff251043),
+                                Color(0xff38126D),
                               ],
                             ),
                             image: 'assets/png/optimize-image.png',
@@ -559,7 +553,7 @@ class _MobileScreenState extends State<MobileScreen> {
                           ),
                         ),
                         const SizedBox(height: 40),
-                        Image.asset('assets/png/technologies.png'),
+                        Image.asset('assets/png/skills.png'),
                       ],
                     ),
                     SizedBox(
@@ -668,36 +662,6 @@ class _MobileScreenState extends State<MobileScreen> {
                         ),
                         const SizedBox(height: 50),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const AutoSizeText(
-                              'Projects',
-                              style: TextStyle(
-                                fontFamily: 'poppins-semiBold',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Color(0xff7127BA),
-                              ),
-                            ),
-                            const AutoSizeText(
-                              'IOT Based Solar Panel Application',
-                              style: TextStyle(
-                                fontFamily: 'poppins-semiBold',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 15),
-                            projectContainer(
-                                technologiesText:
-                                    'Flutter, Dart, REST API, FCM, Rasorpay (Payment Gateway).',
-                                text:
-                                    'I built a responsive design for both Android and iOS applications for customer and installer sides using the Flutter framework. I implemented REST API integrations to support real-time data flow and improve app responsiveness. I integrated Firebase Cloud Messaging (FCM) for push notifications and real-time alerts. I focused on performance optimization, error handling, and ensuring smooth UI transitions. '),
-                          ],
-                        ),
-                        const SizedBox(height: 50),
-                        Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             const AutoSizeText(
@@ -710,7 +674,7 @@ class _MobileScreenState extends State<MobileScreen> {
                               ),
                             ),
                             const AutoSizeText(
-                              'Henkal Digital Presenter Application',
+                              'Zuvonne(Website)',
                               style: TextStyle(
                                 fontFamily: 'poppins-semiBold',
                                 fontWeight: FontWeight.w500,
@@ -720,10 +684,10 @@ class _MobileScreenState extends State<MobileScreen> {
                             ),
                             const SizedBox(height: 15),
                             projectContainer(
-                                technologiesText:
-                                    'Flutter, Dart, REST API, Provider (State Management), MVVM.',
-                                text:
-                                    'HDP is a digital presenter application that allows users to create, manage, and present digital content seamlessly. The app provides an intuitive interface for users to organize their presentations, add multimedia elements, and deliver engaging presentations on various devices. With HDP, users can easily share their presentations with others and collaborate in real-time. The app is designed to enhance the presentation experience, making it more interactive and impactful.'),
+                              technologiesText: 'Flutter, Dart',
+                              text:
+                                  'I have build a responsive website for desktop, tablet, and mobile using the Flutter framework. With a email sending feature, users can easily reach out for inquiries or support. The website is designed to provide a seamless user experience across all devices, ensuring accessibility and engagement for all visitors.',
+                            ),
                           ],
                         ),
                         const SizedBox(height: 50),

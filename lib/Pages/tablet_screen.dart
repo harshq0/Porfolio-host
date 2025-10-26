@@ -14,11 +14,13 @@ class TabletScreen extends StatefulWidget {
 
 class _TabletScreenState extends State<TabletScreen> {
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey aboutKey = GlobalKey();
   final GlobalKey homeKey = GlobalKey();
   final GlobalKey experienceKey = GlobalKey();
-  final GlobalKey technlogiesKey = GlobalKey();
+  final GlobalKey skillKey = GlobalKey();
   final GlobalKey projectKey = GlobalKey();
+  final GlobalKey contactKey = GlobalKey();
+
+  String appTitle = 'Home';
   void _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -38,6 +40,49 @@ class _TabletScreenState extends State<TabletScreen> {
     }
   }
 
+  void _onScroll() {
+    const offsetTolerance = 100.0;
+
+    // Check which section is visible
+    void checkSection(GlobalKey key, String sectionName) {
+      final context = key.currentContext;
+      if (context != null) {
+        final box = context.findRenderObject() as RenderBox?;
+        if (box != null) {
+          final position = box.localToGlobal(Offset.zero).dy;
+
+          // When section top is near the top of screen
+          if (position < offsetTolerance && position > -box.size.height / 8) {
+            if (appTitle != sectionName) {
+              setState(() => appTitle = sectionName);
+            }
+          }
+        }
+      }
+    }
+
+    checkSection(homeKey, 'Home');
+    checkSection(experienceKey, 'Experience');
+    checkSection(skillKey, 'Skills');
+    checkSection(projectKey, 'Projects');
+    checkSection(contactKey, 'Contact');
+
+    // 👇 Additional check for scroll end
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 50) {
+      if (appTitle != 'Contact') {
+        setState(() => appTitle = 'Contact');
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
   @override
   Widget build(BuildContext context) {
     globalHeight = MediaQuery.of(context).size.height;
@@ -53,77 +98,56 @@ class _TabletScreenState extends State<TabletScreen> {
             centerTitle: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 70,
+              spacing: 30,
               children: [
-                InkWell(
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(homeKey);
+                    setState(() {
+                      appTitle = 'Home';
+                      scrollToSection(homeKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Home',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Home',
+                  compare: appTitle,
                 ),
-                InkWell(
+                _appBarTitle(
+                    onTap: () {
+                      setState(() {
+                        appTitle = 'Experience';
+                        scrollToSection(experienceKey);
+                      });
+                    },
+                    title: 'Experience',
+                    compare: appTitle),
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(experienceKey);
+                    setState(() {
+                      appTitle = 'Skills';
+                      scrollToSection(skillKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Work Experience',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Skills',
+                  compare: appTitle,
                 ),
-                InkWell(
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(technlogiesKey);
+                    setState(() {
+                      appTitle = 'Projects';
+                      scrollToSection(projectKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Skills',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Projects',
+                  compare: appTitle,
                 ),
-                InkWell(
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(projectKey);
+                    setState(() {
+                      appTitle = 'Contact';
+                      scrollToSection(contactKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Projects',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    scrollToSection(aboutKey);
-                  },
-                  child: const AutoSizeText(
-                    'About',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Contact',
+                  compare: appTitle,
                 ),
               ],
             ),
@@ -206,7 +230,7 @@ class _TabletScreenState extends State<TabletScreen> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Build a user-friendly application,\n',
+                            text: 'understands Flutter turns ideas into,\n',
                             style: TextStyle(
                               fontFamily: 'Preahvihear',
                               fontWeight: FontWeight.w500,
@@ -215,7 +239,7 @@ class _TabletScreenState extends State<TabletScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: 'Responsive with ',
+                            text: 'smooth experiences',
                             style: TextStyle(
                               fontFamily: 'Preahvihear',
                               fontWeight: FontWeight.w500,
@@ -224,7 +248,7 @@ class _TabletScreenState extends State<TabletScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: 'Flutter magic',
+                            text: 'Flutter and Dart',
                             style: TextStyle(
                               fontFamily: 'Preahvihear',
                               fontWeight: FontWeight.w500,
@@ -347,6 +371,7 @@ class _TabletScreenState extends State<TabletScreen> {
                               colors: [
                                 Color(0xff130428),
                                 Color(0xff251043),
+                                Color(0xff38126D),
                                 // Color(0xff38126D),
                                 // Color(0xff261045),
                                 // Color(0xff190634),
@@ -363,8 +388,6 @@ class _TabletScreenState extends State<TabletScreen> {
                                 Color(0xff130428),
                                 Color(0xff251043),
                                 Color(0xff38126D),
-                                Color(0xff261045),
-                                Color(0xff190634),
                               ],
                             ),
                             image: 'assets/png/api-image.png',
@@ -377,6 +400,7 @@ class _TabletScreenState extends State<TabletScreen> {
                               colors: [
                                 Color(0xff130428),
                                 Color(0xff251043),
+                                Color(0xff38126D),
                                 // Color(0xff38126D),
                                 // Color(0xff261045),
                                 // Color(0xff190634),
@@ -390,8 +414,9 @@ class _TabletScreenState extends State<TabletScreen> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               colors: [
-                                Color(0xff261045),
                                 Color(0xff130428),
+                                Color(0xff251043),
+                                Color(0xff38126D),
 
                                 // Color(0xff38126D),
                                 // Color(0xff261045),
@@ -475,7 +500,7 @@ class _TabletScreenState extends State<TabletScreen> {
                     ),
                     SizedBox(
                       height: 40,
-                      key: technlogiesKey,
+                      key: skillKey,
                     ),
                     const AutoSizeText(
                       'Technologies',
@@ -514,7 +539,7 @@ class _TabletScreenState extends State<TabletScreen> {
                           ),
                         ),
                         const SizedBox(height: 40),
-                        Image.asset('assets/png/technologies.png'),
+                        Image.asset('assets/png/skills.png'),
                       ],
                     ),
                     SizedBox(
@@ -635,7 +660,7 @@ class _TabletScreenState extends State<TabletScreen> {
                               ),
                             ),
                             const AutoSizeText(
-                              'IOT Based Solar Panel Application',
+                              'Zuvonne(Website)',
                               style: TextStyle(
                                 fontFamily: 'poppins-semiBold',
                                 fontWeight: FontWeight.w500,
@@ -645,17 +670,17 @@ class _TabletScreenState extends State<TabletScreen> {
                             ),
                             const SizedBox(height: 30),
                             projectContainer(
-                              liveOnTap: () async {
-                                final Uri url =
-                                    Uri.parse('https://www.zetstron.com/');
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(url,
-                                      mode: LaunchMode.externalApplication);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                              liveUrl: 'www.zetstron.com',
+                              // liveOnTap: () async {
+                              //   final Uri url =
+                              //       Uri.parse('https://www.zetstron.com/');
+                              //   if (await canLaunchUrl(url)) {
+                              //     await launchUrl(url,
+                              //         mode: LaunchMode.externalApplication);
+                              //   } else {
+                              //     throw 'Could not launch $url';
+                              //   }
+                              // },
+                              // liveUrl: 'www.zetstron.com',
                               width: globalWidth,
                               projectImage: Container(
                                 decoration: BoxDecoration(
@@ -681,9 +706,11 @@ class _TabletScreenState extends State<TabletScreen> {
                         const SizedBox(height: 50),
                       ],
                     ),
-                    const SizedBox(height: 100),
-                    AutoSizeText(
-                      key: aboutKey,
+                    SizedBox(
+                      height: 100,
+                      key: contactKey,
+                    ),
+                    const AutoSizeText(
                       'Contact',
                       style: const TextStyle(
                         fontFamily: 'Preahvihear',
@@ -934,4 +961,31 @@ class _TabletScreenState extends State<TabletScreen> {
       ),
     );
   }
+}
+
+Widget _appBarTitle(
+    {required String title,
+    required String compare,
+    required void Function()? onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      decoration: BoxDecoration(
+        color: compare == title ? Colors.white : Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+        child: AutoSizeText(
+          title,
+          style: TextStyle(
+            fontFamily: 'Preahvihear',
+            fontSize: 17.5,
+            fontWeight: compare == title ? FontWeight.w800 : FontWeight.w400,
+            color: compare == title ? Colors.black : Colors.white,
+          ),
+        ),
+      ),
+    ),
+  );
 }

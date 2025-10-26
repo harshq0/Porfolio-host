@@ -262,7 +262,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        'Build a user-friendly application,\n',
+                                        'understands Flutter turns ideas into,\n',
                                     style: TextStyle(
                                       fontFamily: 'Preahvihear',
                                       fontWeight: FontWeight.w500,
@@ -270,17 +270,17 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                       color: Colors.white,
                                     ),
                                   ),
+                                  // TextSpan(
+                                  //   text: 'Responsive with ',
+                                  //   style: TextStyle(
+                                  //     fontFamily: 'Preahvihear',
+                                  //     fontWeight: FontWeight.w500,
+                                  //     fontSize: 30,
+                                  //     color: Colors.white,
+                                  //   ),
+                                  // ),
                                   TextSpan(
-                                    text: 'Responsive with ',
-                                    style: TextStyle(
-                                      fontFamily: 'Preahvihear',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 30,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Flutter magic',
+                                    text: 'smooth experiences',
                                     style: TextStyle(
                                       fontFamily: 'Preahvihear',
                                       fontWeight: FontWeight.w500,
