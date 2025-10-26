@@ -576,48 +576,49 @@ class _TabletScreenState extends State<TabletScreen> {
                             ),
                             const SizedBox(height: 30),
                             projectContainer(
-                                liveOnTap: () async {
-                                  final Uri url = Uri.parse(
-                                      'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(url,
-                                        mode: LaunchMode.externalApplication);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                liveOnTapIos: () async {
-                                  final Uri url = Uri.parse(
-                                      'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(url,
-                                        mode: LaunchMode.externalApplication);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                liveUrl: 'HDP android mobile app',
-                                liveUrlIos: 'HDP ios mobile app',
-                                width: globalWidth,
-                                projectImage: Container(
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xff2B0B3A),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 30.0, top: 30.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                          'assets/png/zetstron.png',
-                                          height: 300),
-                                    ),
+                              liveOnTap: () async {
+                                final Uri url = Uri.parse(
+                                    'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveOnTapIos: () async {
+                                final Uri url = Uri.parse(
+                                    'https://apps.apple.com/in/app/henkel-digital-presenter/id1563799427');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveUrl: 'Android mobile app',
+                              liveUrlIos: 'Ios mobile app',
+                              width: globalWidth,
+                              projectImage: Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff2B0B3A),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 30.0, top: 30.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                        'assets/png/zetstron.png',
+                                        height: 300),
                                   ),
                                 ),
-                                technologiesText:
-                                    'Flutter, Dart, REST API, Provider(State Management),MVVM, Animations.',
-                                text:
-                                    'HDP is a digital presenter application that allows users to create, manage, and present digital content seamlessly. The app provides an intuitive interface for users to organize their presentations, add multimedia elements, and deliver engaging presentations on various devices. With HDP, users can easily share their presentations with others and collaborate in real-time. The app is designed to enhance the presentation experience, making it more interactive and impactful.'),
+                              ),
+                              technologiesText:
+                                  'Flutter, Dart, REST API, Provider(State Management),MVVM, Animations.',
+                              text:
+                                  'Developed a digital application for sales and merchandising teams to view, manage, and present Henkel Beauty Care products across GCC retail stores. The app includes product details, brand visuals, features, benefits, barcodes, and must-stock lists, helping teams ensure brand consistency, planogram compliance, and effective in-store execution. It serves as a reference and presentation tool, enhancing efficiency and accuracy during store visits.',
+                            ),
                           ],
                         ),
                         const SizedBox(height: 50),
@@ -816,20 +817,33 @@ class _TabletScreenState extends State<TabletScreen> {
                     overflow: TextOverflow.visible,
                   ),
                 ),
-                Row(
-                  spacing: 15,
-                  children: [
-                    AutoSizeText(
-                      'Technologies Used : $technologiesText',
-                      style: const TextStyle(
-                        fontFamily: 'poppins-medium',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.visible,
-                      ),
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontFamily: 'poppins-medium',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
                     ),
-                    Image.asset('assets/png/arrow_point.png', height: 15),
-                  ],
+                    children: [
+                      TextSpan(
+                        text: 'Technologies Used : $technologiesText ',
+                        style: const TextStyle(
+                          fontFamily: 'poppins-medium',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Image.asset(
+                          'assets/png/arrow_point.png',
+                          height: 15,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Column(
                   spacing: 5,

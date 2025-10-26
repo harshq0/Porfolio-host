@@ -19,7 +19,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
   final GlobalKey skillKey = GlobalKey();
   final GlobalKey projectKey = GlobalKey();
   final GlobalKey contactKey = GlobalKey();
-
+  String appTitle = 'Home';
   void _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -52,6 +52,49 @@ class _DesktopScreenState extends State<DesktopScreen> {
     }
   }
 
+  void _onScroll() {
+    const offsetTolerance = 100.0;
+
+    // Check which section is visible
+    void checkSection(GlobalKey key, String sectionName) {
+      final context = key.currentContext;
+      if (context != null) {
+        final box = context.findRenderObject() as RenderBox?;
+        if (box != null) {
+          final position = box.localToGlobal(Offset.zero).dy;
+
+          // When section top is near the top of screen
+          if (position < offsetTolerance && position > -box.size.height / 8) {
+            if (appTitle != sectionName) {
+              setState(() => appTitle = sectionName);
+            }
+          }
+        }
+      }
+    }
+
+    checkSection(homeKey, 'Home');
+    checkSection(experienceKey, 'Experience');
+    checkSection(skillKey, 'Skills');
+    checkSection(projectKey, 'Projects');
+    checkSection(contactKey, 'Contact');
+
+    // 👇 Additional check for scroll end
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 50) {
+      if (appTitle != 'Contact') {
+        setState(() => appTitle = 'Contact');
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
   @override
   Widget build(BuildContext context) {
     globalHeight = MediaQuery.of(context).size.height;
@@ -69,75 +112,54 @@ class _DesktopScreenState extends State<DesktopScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 100,
               children: [
-                InkWell(
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(homeKey);
+                    setState(() {
+                      appTitle = 'Home';
+                      scrollToSection(homeKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Home',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Home',
+                  compare: appTitle,
                 ),
-                InkWell(
+                _appBarTitle(
+                    onTap: () {
+                      setState(() {
+                        appTitle = 'Experience';
+                        scrollToSection(experienceKey);
+                      });
+                    },
+                    title: 'Experience',
+                    compare: appTitle),
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(experienceKey);
+                    setState(() {
+                      appTitle = 'Skills';
+                      scrollToSection(skillKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Experience',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Skills',
+                  compare: appTitle,
                 ),
-                InkWell(
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(skillKey);
+                    setState(() {
+                      appTitle = 'Projects';
+                      scrollToSection(projectKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Skills',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Projects',
+                  compare: appTitle,
                 ),
-                InkWell(
+                _appBarTitle(
                   onTap: () {
-                    scrollToSection(projectKey);
+                    setState(() {
+                      appTitle = 'Contact';
+                      scrollToSection(contactKey);
+                    });
                   },
-                  child: const AutoSizeText(
-                    'Projects',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    scrollToSection(contactKey);
-                  },
-                  child: const AutoSizeText(
-                    'Contact',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
+                  title: 'Contact',
+                  compare: appTitle,
                 ),
               ],
             ),
@@ -147,7 +169,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
               controller: _scrollController,
               child: Column(
                 key: homeKey,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 130),
                   Stack(
@@ -622,12 +644,65 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 40),
-                            Image.asset('assets/png/technologies.png'),
+                            const SizedBox(height: 60),
+                            Image.asset('assets/png/skills.png'),
+                            // Stack(
+                            //   children: [
+                            //     Image.asset('assets/png/skills.png'),
+                            //     Padding(
+                            //       padding:
+                            //           EdgeInsets.only(left: globalWidth / 8),
+                            //       child: Row(
+                            //         children: [
+                            //           Tooltip(
+                            //             message: 'Flutter',
+                            //             child: Image.asset(
+                            //                 'assets/png/flutter-logo.png',
+                            //                 height: globalHeight / 7),
+                            //           ),
+                            //           SizedBox(width: globalWidth / 30),
+                            //           Tooltip(
+                            //             message: 'Flutter',
+                            //             child: Image.asset(
+                            //               'assets/png/dart-logo.png',
+                            //               height: 70,
+                            //             ),
+                            //           ),
+                            //           SizedBox(width: globalWidth / 30),
+                            //           Tooltip(
+                            //             message: 'Flutter',
+                            //             child: Image.asset(
+                            //               'assets/png/firebase-logo.png',
+                            //               height: globalHeight / 8,
+                            //             ),
+                            //           ),
+                            //           SizedBox(width: globalWidth / 35),
+                            //           Tooltip(
+                            //             message: 'Flutter',
+                            //             child: Image.asset(
+                            //               'assets/png/bloc-logo.png',
+                            //               height: globalHeight / 9,
+                            //             ),
+                            //           ),
+                            //           SizedBox(width: globalWidth / 22),
+                            //           Image.asset(
+                            //             'assets/png/sqflite-logo.png',
+                            //             height: globalHeight / 9,
+                            //           ),
+                            //           SizedBox(width: globalWidth / 80),
+                            //           Image.asset(
+                            //             'assets/png/flutter-logo.png',
+                            //             height: globalHeight / 7,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
                           ],
                         ),
                         SizedBox(
-                          height: 50,
+                          height: 70,
                           key: projectKey,
                         ),
 
@@ -663,13 +738,12 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                         left: 30.0, top: 30.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                          'assets/png/zetstron.png',
+                                      child: Image.asset('assets/png/iot.png',
                                           height: 300),
                                     ),
                                   ),
                                 ),
-                                width: globalWidth / 2.24,
+                                width: globalWidth * 0.43,
                                 technologiesText:
                                     'Flutter, Dart, REST API, FCM, Rasorpay (Payment Gateway).',
                                 text:
@@ -700,50 +774,51 @@ class _DesktopScreenState extends State<DesktopScreen> {
                             ),
                             const SizedBox(height: 30),
                             projectContainer(
-                                liveOnTap: () async {
-                                  final Uri url = Uri.parse(
-                                      'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(url,
-                                        mode: LaunchMode.externalApplication);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                liveOnTapIos: () async {
-                                  final Uri url = Uri.parse(
-                                      'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(url,
-                                        mode: LaunchMode.externalApplication);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                liveUrl: 'HDP android mobile app',
-                                liveUrlIos: 'HDP ios mobile app',
-                                alignmentImage: Alignment.centerLeft,
-                                alignmentContainer: Alignment.centerRight,
-                                width: globalWidth / 2.24,
-                                projectImage: Container(
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xff2B0B3A),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 30.0, top: 30.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.asset(
-                                          'assets/png/zetstron.png',
-                                          height: 300),
-                                    ),
+                              liveOnTap: () async {
+                                final Uri url = Uri.parse(
+                                    'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveOnTapIos: () async {
+                                final Uri url = Uri.parse(
+                                    'https://apps.apple.com/in/app/henkel-digital-presenter/id1563799427');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveUrl: 'Android mobile app',
+                              liveUrlIos: 'Ios mobile app',
+                              alignmentImage: Alignment.centerLeft,
+                              alignmentContainer: Alignment.centerRight,
+                              width: globalWidth * 0.43,
+                              projectImage: Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff2B0B3A),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 30.0, top: 30.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                        'assets/png/online-merchandisers.png',
+                                        height: 300),
                                   ),
                                 ),
-                                technologiesText:
-                                    'Flutter, Dart, REST API, Provider(State Management),\nMVVM, Animations.',
-                                text:
-                                    'HDP is a digital presenter application that allows users to create, manage, and present digital content seamlessly. The app provides an intuitive interface for users to organize their presentations, add multimedia elements, and deliver engaging presentations on various devices. With HDP, users can easily share their presentations with others and collaborate in real-time. The app is designed to enhance the presentation experience, making it more interactive and impactful.'),
+                              ),
+                              technologiesText:
+                                  'Flutter, Dart, REST API, Provider(State Management),\nMVVM, Animations.',
+                              text:
+                                  'Developed a digital application for sales and merchandising teams to view, manage, and present Henkel Beauty Care products across GCC retail stores. The app includes product details, brand visuals, features, benefits, barcodes, and must-stock lists, helping teams ensure brand consistency, planogram compliance, and effective in-store execution. It serves as a reference and presentation tool, enhancing efficiency and accuracy during store visits.',
+                            ),
                           ],
                         ),
                         const SizedBox(height: 50),
@@ -760,7 +835,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
                               ),
                             ),
                             const AutoSizeText(
-                              'Zetstron(Website)',
+                              'Zuvonne(Website)',
                               style: TextStyle(
                                 fontFamily: 'poppins-semiBold',
                                 fontWeight: FontWeight.w500,
@@ -770,18 +845,18 @@ class _DesktopScreenState extends State<DesktopScreen> {
                             ),
                             const SizedBox(height: 30),
                             projectContainer(
-                              liveOnTap: () async {
-                                final Uri url =
-                                    Uri.parse('https://www.zetstron.com/');
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(url,
-                                      mode: LaunchMode.externalApplication);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                              liveUrl: 'www.zetstron.com',
-                              width: globalWidth / 2.3,
+                              // liveOnTap: () async {
+                              //   final Uri url =
+                              //       Uri.parse('https://www.zetstron.com/');
+                              //   if (await canLaunchUrl(url)) {
+                              //     await launchUrl(url,
+                              //         mode: LaunchMode.externalApplication);
+                              //   } else {
+                              //     throw 'Could not launch $url';
+                              //   }
+                              // },
+                              // liveUrl: 'www.zetstron.com',
+                              width: globalWidth * 0.43,
                               projectImage: Container(
                                 decoration: BoxDecoration(
                                     color: const Color(0xff2B0B3A),
@@ -791,9 +866,8 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                       left: 30.0, top: 30.0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: Image.asset(
-                                        'assets/png/zetstron.png',
-                                        height: 300),
+                                    child: Image.asset('assets/png/zuvonne.png',
+                                        height: 255),
                                   ),
                                 ),
                               ),
@@ -987,26 +1061,40 @@ class _DesktopScreenState extends State<DesktopScreen> {
                       AutoSizeText(
                         text,
                         style: const TextStyle(
+                          color: Colors.white,
                           fontFamily: 'poppins-medium',
                           fontSize: 16.5,
                           fontWeight: FontWeight.w500,
                           overflow: TextOverflow.visible,
                         ),
                       ),
-                      Row(
-                        spacing: 15,
-                        children: [
-                          AutoSizeText(
-                            'Technologies Used : $technologiesText',
-                            style: const TextStyle(
-                              fontFamily: 'poppins-medium',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.visible,
-                            ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            fontFamily: 'poppins-medium',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
                           ),
-                          Image.asset('assets/png/arrow_point.png', height: 15),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: 'Technologies Used : $technologiesText ',
+                              style: const TextStyle(
+                                fontFamily: 'poppins-medium',
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Image.asset(
+                                'assets/png/arrow_point.png',
+                                height: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
                         spacing: 5,
@@ -1016,7 +1104,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                   spacing: 15,
                                   children: [
                                     const AutoSizeText(
-                                      'Live Production :',
+                                      'Live :',
                                       style: TextStyle(
                                         fontFamily: 'poppins-medium',
                                         fontSize: 14,
@@ -1044,7 +1132,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
                                   spacing: 15,
                                   children: [
                                     const AutoSizeText(
-                                      'Live Production :',
+                                      'Live :',
                                       style: TextStyle(
                                         fontFamily: 'poppins-medium',
                                         fontSize: 14,
@@ -1102,4 +1190,31 @@ class _DesktopScreenState extends State<DesktopScreen> {
       ),
     );
   }
+}
+
+Widget _appBarTitle(
+    {required String title,
+    required String compare,
+    required void Function()? onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      decoration: BoxDecoration(
+        color: compare == title ? Colors.white : Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+        child: AutoSizeText(
+          title,
+          style: TextStyle(
+            fontFamily: 'Preahvihear',
+            fontSize: 17.5,
+            fontWeight: FontWeight.w400,
+            color: compare == title ? Colors.black : Colors.white,
+          ),
+        ),
+      ),
+    ),
+  );
 }

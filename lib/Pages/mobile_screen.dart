@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:harish_portfolio/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,6 +17,9 @@ class _MobileScreenState extends State<MobileScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey aboutKey = GlobalKey();
   final GlobalKey homeKey = GlobalKey();
+  final GlobalKey experienceKey = GlobalKey();
+  final GlobalKey technlogiesKey = GlobalKey();
+  final GlobalKey projectKey = GlobalKey();
   void _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -41,47 +45,134 @@ class _MobileScreenState extends State<MobileScreen> {
     globalWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xff11071F),
+      drawer: Drawer(
+        backgroundColor: const Color(0xff1A0B2E),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 40,
+            children: [
+              InkWell(
+                onTap: () {
+                  scrollToSection(homeKey);
+                  Navigator.pop(context);
+                },
+                child: const AutoSizeText(
+                  'Home',
+                  style: TextStyle(
+                    fontFamily: 'Preahvihear',
+                    fontSize: 17.5,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  scrollToSection(experienceKey);
+                  Navigator.pop(context);
+                },
+                child: const AutoSizeText(
+                  'Work Experience',
+                  style: TextStyle(
+                    fontFamily: 'Preahvihear',
+                    fontSize: 17.5,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  scrollToSection(technlogiesKey);
+                  Navigator.pop(context);
+                },
+                child: const AutoSizeText(
+                  'Skills',
+                  style: TextStyle(
+                    fontFamily: 'Preahvihear',
+                    fontSize: 17.5,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  scrollToSection(projectKey);
+                  Navigator.pop(context);
+                },
+                child: const AutoSizeText(
+                  'Projects',
+                  style: TextStyle(
+                    fontFamily: 'Preahvihear',
+                    fontSize: 17.5,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  scrollToSection(aboutKey);
+                  Navigator.pop(context);
+                },
+                child: const AutoSizeText(
+                  'About',
+                  style: TextStyle(
+                    fontFamily: 'Preahvihear',
+                    fontSize: 17.5,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             expandedHeight: 60,
             pinned: true,
-            backgroundColor: const Color(0xff1A0B2E),
-            centerTitle: true,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 150,
-              children: [
-                InkWell(
-                  onTap: () {
-                    scrollToSection(homeKey);
-                  },
-                  child: const AutoSizeText(
-                    'Home',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    scrollToSection(aboutKey);
-                  },
-                  child: const AutoSizeText(
-                    'About',
-                    style: TextStyle(
-                      fontFamily: 'Preahvihear',
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            backgroundColor: Color(0xff1A0B2E),
+            // centerTitle: true,
+            // title: Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   spacing: 150,
+            //   children: [
+            //     InkWell(
+            //       onTap: () {
+            //         scrollToSection(homeKey);
+            //       },
+            //       child: const AutoSizeText(
+            //         'Home',
+            //         style: TextStyle(
+            //           fontFamily: 'Preahvihear',
+            //           fontSize: 17.5,
+            //           fontWeight: FontWeight.w400,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+            //     InkWell(
+            //       onTap: () {
+            //         scrollToSection(aboutKey);
+            //       },
+            //       child: const AutoSizeText(
+            //         'About',
+            //         style: TextStyle(
+            //           fontFamily: 'Preahvihear',
+            //           fontSize: 17.5,
+            //           fontWeight: FontWeight.w400,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ),
           SliverFillRemaining(
             child: SingleChildScrollView(
@@ -218,7 +309,10 @@ class _MobileScreenState extends State<MobileScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    SizedBox(
+                      height: 50,
+                      key: experienceKey,
+                    ),
                     const AutoSizeText(
                       'Work Experience',
                       style: TextStyle(
@@ -424,7 +518,10 @@ class _MobileScreenState extends State<MobileScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(
+                      height: 30,
+                      key: technlogiesKey,
+                    ),
                     const AutoSizeText(
                       'Technologies',
                       style: TextStyle(
@@ -465,7 +562,10 @@ class _MobileScreenState extends State<MobileScreen> {
                         Image.asset('assets/png/technologies.png'),
                       ],
                     ),
-                    const SizedBox(height: 50),
+                    SizedBox(
+                      height: 50,
+                      key: projectKey,
+                    ),
                     Column(
                       children: [
                         Column(
@@ -521,10 +621,49 @@ class _MobileScreenState extends State<MobileScreen> {
                             ),
                             const SizedBox(height: 15),
                             projectContainer(
-                                technologiesText:
-                                    'Flutter, Dart, REST API, Provider (State Management), MVVM.',
-                                text:
-                                    'HDP is a digital presenter application that allows users to create, manage, and present digital content seamlessly. The app provides an intuitive interface for users to organize their presentations, add multimedia elements, and deliver engaging presentations on various devices. With HDP, users can easily share their presentations with others and collaborate in real-time. The app is designed to enhance the presentation experience, making it more interactive and impactful.'),
+                              liveOnTap: () async {
+                                final Uri url = Uri.parse(
+                                    'https://play.google.com/store/apps/details?id=com.henkel.DigitalPresenter.Android');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveOnTapIos: () async {
+                                final Uri url = Uri.parse(
+                                    'https://apps.apple.com/in/app/henkel-digital-presenter/id1563799427');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              liveUrl: 'Android mobile app',
+                              liveUrlIos: 'Ios mobile app',
+                              width: globalWidth,
+                              projectImage: Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff2B0B3A),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 30.0, top: 30.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                        'assets/png/zetstron.png',
+                                        height: 300),
+                                  ),
+                                ),
+                              ),
+                              technologiesText:
+                                  'Flutter, Dart, REST API, Provider(State Management),MVVM, Animations.',
+                              text:
+                                  'Developed a digital application for sales and merchandising teams to view, manage, and present Henkel Beauty Care products across GCC retail stores. The app includes product details, brand visuals, features, benefits, barcodes, and must-stock lists, helping teams ensure brand consistency, planogram compliance, and effective in-store execution. It serves as a reference and presentation tool, enhancing efficiency and accuracy during store visits.',
+                            ),
                           ],
                         ),
                         const SizedBox(height: 50),
@@ -689,16 +828,24 @@ class _MobileScreenState extends State<MobileScreen> {
     );
   }
 
-  Widget projectContainer(
-      {required String text, required String technologiesText}) {
+  Widget projectContainer({
+    required String text,
+    required String technologiesText,
+    double? width,
+    Widget? projectImage,
+    String? liveUrl,
+    String? liveUrlIos,
+    void Function()? liveOnTap,
+    void Function()? liveOnTapIos,
+  }) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Container(
-          width: globalWidth,
+          width: width,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withOpacity(0.1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
@@ -710,18 +857,98 @@ class _MobileScreenState extends State<MobileScreen> {
                 AutoSizeText(
                   text,
                   style: const TextStyle(
-                      fontFamily: 'poppins-medium',
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.visible),
+                    fontFamily: 'poppins-medium',
+                    fontSize: 16.5,
+                    fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.visible,
+                  ),
                 ),
-                AutoSizeText(
-                  'Technologoies Used : $technologiesText',
-                  style: const TextStyle(
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
                       fontFamily: 'poppins-medium',
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.visible),
+                      color: Colors.white,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Technologies Used : $technologiesText ',
+                        style: const TextStyle(
+                          fontFamily: 'poppins-medium',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Image.asset(
+                          'assets/png/arrow_point.png',
+                          height: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  spacing: 5,
+                  children: [
+                    liveUrl != null
+                        ? Row(
+                            spacing: 15,
+                            children: [
+                              const AutoSizeText(
+                                'Live :',
+                                style: TextStyle(
+                                  fontFamily: 'poppins-medium',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: liveOnTap,
+                                child: AutoSizeText(liveUrl,
+                                    style: const TextStyle(
+                                      fontFamily: 'poppins-medium',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.visible,
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                    liveUrlIos != null
+                        ? Row(
+                            spacing: 15,
+                            children: [
+                              const AutoSizeText(
+                                'Live :',
+                                style: TextStyle(
+                                  fontFamily: 'poppins-medium',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: liveOnTapIos,
+                                child: AutoSizeText(liveUrlIos,
+                                    style: const TextStyle(
+                                      fontFamily: 'poppins-medium',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.visible,
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
               ],
             ),
